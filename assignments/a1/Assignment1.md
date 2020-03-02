@@ -63,7 +63,7 @@ Implement the PageRank algorithm `compute_pagerank`. This task should be very ea
 * *damping_factor*: The damping factor.
 * *epsylon*: The value of epsylon used to determine when to stop the PageRank algorithm. See the lecture notes and related workshop for details.
 
-### 5. Compute the summarisation system
+### 5. Implement the summarisation system
 
 Finally, you can now implement the summariser! Implement a function `summarise` that returns the *n* sentences with highest PageRank value. Make sure that the list of sentences is returned in the same order as they appear in the original list. The input arguments are:
 

@@ -11,7 +11,7 @@ def get_top_stems(document, n, stopwords):
     comparison with the list of stop words is not case-sensitive and it is 
     performed before stemming.
     >>> my_document = "This is a sentence. This is another sentence. One more sentence."
-    >>> get_top_stems(my_document, 3, ['.', 'is', 'this'])
+    >>> get_top_stems(my_document, 3, ['.', 'is', 'this', 'the'])
     ['sentenc', 'a', 'anoth']
     >>> get_top_stems(emma, 10, my_stopwords)
     ['mr.', "'s", 'emma', 'could', 'would', 'mrs.', 'miss', 'must', 'harriet', 'much']

@@ -15,7 +15,6 @@ def get_top_stems(document, n, stopwords):
     ['sentenc', 'a', 'anoth']
     >>> get_top_stems(emma, 10, my_stopwords)
     ['mr.', "'s", 'emma', 'could', 'would', 'mrs.', 'miss', 'must', 'harriet', 'much']
-
     """
     return []
 
@@ -52,11 +51,11 @@ def compute_jaccard(sentence1, sentence2, list_of_stems):
 
     if len(words1) + len(words2) == 0:
         return 0
-    return 2*len(words1 & words2)/(len(words1) + len(words2))
+    return len(words1 & words2)/len(words1 | words2)
 
-# Task 3 (1 mark) (change this to compute PageRank??)
-def get_adjacency_matrix(list_sentences, list_of_stems, threshold=0.5):
-    """Return the adjacency matrix as a numpy array. To compute the adjacency
+# Task 3 (1 mark)
+def get_transition_matrix(list_sentences, list_of_stems, threshold=0.5):
+    """Return the transition matrix as a numpy array. To compute the transition
     matrix, use compute_jaccard to find the similarity between two sentences. 
     Sentence 1 links to sentence 2 if their jaccard similarity is larger or equal 
     than the threshold.
@@ -65,24 +64,22 @@ def get_adjacency_matrix(list_sentences, list_of_stems, threshold=0.5):
     >>> s3 = "This is another sentence 3."
     >>> s4 = "Another 3 sentences above."
     >>> sentences = [s1, s2, s3, s4]
-    >>> get_adjacency_matrix(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.8)
+    >>> get_transition_matrix(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.7)
+    array([[1.        , 0.        , 0.        , 0.        ],
+           [0.        , 0.5       , 0.33333333, 0.        ],
+           [0.        , 0.5       , 0.33333333, 0.5       ],
+           [0.        , 0.        , 0.33333333, 0.5       ]])
+    >>> get_transition_matrix(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.6)
     array([[0.5       , 0.33333333, 0.        , 0.        ],
            [0.5       , 0.33333333, 0.33333333, 0.        ],
            [0.        , 0.33333333, 0.33333333, 0.5       ],
            [0.        , 0.        , 0.33333333, 0.5       ]])
-    >>> get_adjacency_matrix(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.6)
-    array([[0.33333333, 0.25      , 0.25      , 0.        ],
-           [0.33333333, 0.25      , 0.25      , 0.33333333],
-           [0.33333333, 0.25      , 0.25      , 0.33333333],
-           [0.        , 0.25      , 0.25      , 0.33333333]])
-    >>> get_adjacency_matrix(sentences, ['thi', '2'], 0.7)
+    >>> get_transition_matrix(sentences, ['thi', '2'], 0.7)
     array([[0.5 , 0.  , 0.5 , 0.25],
            [0.  , 1.  , 0.  , 0.25],
            [0.5 , 0.  , 0.5 , 0.25],
            [0.  , 0.  , 0.  , 0.25]])
-
     """
-
     return np.array()
 
 # Task 4 (1 mark)
@@ -93,16 +90,16 @@ def compute_pagerank(list_sentences, list_of_stems, threshold=0.5, damping_facto
     >>> s3 = "This is another sentence 3."
     >>> s4 = "Another 3 sentences above."
     >>> sentences = [s1, s2, s3, s4]
-    >>> compute_pagerank(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.8)
-    array([[0.209...],
-           [0.290...],
-           [0.290...],
-           [0.209...]])
-    >>> compute_pagerank(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.8, 0.5, 0.001)
-    array([[0.227...],
-           [0.272...],
-           [0.272...],
-           [0.227...]])
+    >>> compute_pagerank(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.7)
+    array([[0.25     ],
+           [0.218...],
+           [0.312...],
+           [0.218...]])
+    >>> compute_pagerank(sentences, ['thi', 'sentenc', 'anoth', '3'], 0.7, 0.5, 0.001)
+    array([[0.25 ...],
+           [0.230...],
+           [0.288...],
+           [0.230...]])
 """
     return np.array()
 
@@ -116,15 +113,12 @@ def summarise(text, list_of_stems, N=3, threshold=0.5, damping_factor=0.85, epsy
     >>> s3 = "This is another sentence 3. "
     >>> s4 = "Another 3 sentences above."
     >>> text = s1+s2+s3+s4
-    >>> summarise(text, ['thi', 'sentenc', 'anoth', '3'], 2, 0.8)
-    ['This is another sentence 2.', 'This is another sentence 3.']
+    >>> summarise(text, ['thi', 'sentenc', 'anoth', '3'], 2, 0.7)
+    ['This is sentence 1.', 'This is another sentence 3.']
     >>> text = emma[:2000]
     >>> top_stems = ['mr.', "'s", 'emma', 'could', 'would', 'mrs.', 'miss', 'must', 'harriet', 'much']
     >>> for s in summarise(text, top_stems , 3, 0.3):
     ...    print(s)
-    Sixteen years had Miss Taylor been in Mr. Woodhouse's family,
-    less as a governess than a friend, very fond of both daughters,
-    but particularly of Emma.
     Even before Miss Taylor had ceased to hold the nominal
     office of governess, the mildness of her temper had hardly allowed
     her to impose any restraint; and the shadow of authority being
@@ -136,6 +130,8 @@ def summarise(text, list_of_stems, N=3, threshold=0.5, damping_factor=0.85, epsy
     rather too much her own way, and a disposition to think a little
     too well of herself; these were the disadvantages which threatened
     alloy to her many enjoyments.
+    It was Miss
+    Taylor's loss which first brought grief.
     """
     return []
 

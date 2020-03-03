@@ -43,15 +43,15 @@ The template includes an implementation of the Jaccard similarity `compute_jacca
 
 * https://en.wikipedia.org/wiki/Jaccard_index
 
-### 3. Compute the adjacency matrix
+### 3. Compute the transition matrix
 
-Implement a function `get_adjacency_matrix` that computes the adjacency matrix of a list of sentences. The adjacency matrix is as described in the unit lectures. The difference in the lectures is that the adjacency matrix represents a graph of webpages that are connected through their web links. But your implementation will represent a graph of sentences that are connected when their Jaccard similarity is equal or greater than a threshold. The input arguments of the function are:
+Implement a function `get_transition_matrix` that computes the transition matrix of a list of sentences. The transition matrix is the same as described in the unit lectures. The difference in the lectures is that the transition matrix represents a graph of webpages that are connected through their web links. But your implementation will represent a graph of sentences that are connected when their Jaccard similarity is equal or greater than a threshold. The input arguments of the function are:
 
 * "list_sentences": A Python list of strings where each string represents one sentence.
 * "list_of_stems": A list of stems that is used to define what stems will be used by the Jaccard similarity.
-* "threshold": A threshold that will determine whether two sentences are related. If the Jaccard similarity between two sentences is equal or larger than the threshold, then the adjacency matrix will show a link between them.
+* "threshold": A threshold that will determine whether two sentences are related. If the Jaccard similarity between two sentences is equal or larger than the threshold, then the transition matrix will show a link between them.
 
-When you compute the adjacency matrix it may happen that a sentence is not similar with any other sentence. It could even happen that the sentence shows a Jaccard similarity of zero with itself! This may happen if none of the stems of the sentence appears in the list of stems. This is a case of a "dangling" page in the original PageRank algorithm. When that happens, all of the elements in the column of the adjacency matrix that represents the sentence will have the same value: 1/number_of_sentences. This means that a random surfer that visits a dangling page will randomly visit any page in the next step.
+When you compute the transition matrix it may happen that a sentence is not similar with any other sentence. It could even happen that the sentence shows a Jaccard similarity of zero with itself! This may happen if none of the stems of the sentence appears in the list of stems. This is a case of a "dangling" page in the original PageRank algorithm. When that happens, all of the elements in the column of the transition matrix that represents the sentence must the same value: 1/number_of_sentences. This means that a random surfer that visits a dangling page will randomly visit any page in the next step.
 
 ### 4. Compute PageRank
 
@@ -59,18 +59,18 @@ Implement the PageRank algorithm `compute_pagerank`. This task should be very ea
 
 * *list_sentences*: The list of sentences.
 * *list_of_stems*: The list of important stems that is used to compute the Jaccard similarity.
-* *threshold*: The threshold that is used to compute the adjacency matrix.
+* *threshold*: The threshold that is used to compute the transition matrix.
 * *damping_factor*: The damping factor.
 * *epsylon*: The value of epsylon used to determine when to stop the PageRank algorithm. See the lecture notes and related workshop for details.
 
-### 5. Implement the summarisation system
+### 5. Compute the summarisation system
 
 Finally, you can now implement the summariser! Implement a function `summarise` that returns the *n* sentences with highest PageRank value. Make sure that the list of sentences is returned in the same order as they appear in the original list. The input arguments are:
 
 * *text*: The text of the document. This is a string that has multiple sentences. You need to split the text into sentences using NLTK, and pass the list to the other functions that you have implemented in the previous tasks in order to determine the PageRank.
 * *list_of_stems*: The list of important stems used for the Jaccard similarity.
 * *N*: The number of sentences to return in the summary. If *N* is larger than the total number of sentences, then the system returns the original list (and it would be a useless summary).
-* *threshold*: The threshold used to determine the adjacency matrix.
+* *threshold*: The threshold used to determine the transition matrix.
 * *damping_factor*: The damping factor used to compute the PageRank.
 * *epsylon*: The value of epsylon to determine when to stop the PageRank algorithm.
 

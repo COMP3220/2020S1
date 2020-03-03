@@ -40,11 +40,11 @@ def compute_jaccard(sentence1, sentence2, list_of_stems):
     To compute the jaccard similarity, call to your definition of sentence_to_set in
     order to convert a sentence into a set of stems.
     >>> compute_jaccard("This is sentence 1.", "This is another sentence 2.", ['thi', 'sentenc', 'anoth'])
-    0.8
+    0.666...
     >>> long_sentence1 = "Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence"
     >>> long_sentence2 = "Emma Woodhouse, handsome, smart, and not poor, with a cosy house and happy disposition, seemed to unite some of the best blessings of existence"
     >>> compute_jaccard(long_sentence1, long_sentence2, ['emma', 'clever', 'seem', 'bless'])
-    0.857...
+    0.75
     """
     words1 = sentence_to_set(sentence1, list_of_stems)
     words2 = sentence_to_set(sentence2, list_of_stems)
